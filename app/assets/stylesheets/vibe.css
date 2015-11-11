@@ -1,0 +1,35 @@
+#timer {
+    font-size: 3em;
+    letter-spacing: -1px;
+    margin-bottom: 30px;
+    margin-top: 0px;
+    text-align: right;
+    font-weight: bold;
+    color: red;
+    height: 50%;
+}
+
+#songCounter {
+    font-size: 3em;
+    letter-spacing: -1px;
+    margin-bottom: 30px;
+    text-align: left;
+    font-weight: bold;
+    margin-top: -11%;
+    color: white;
+    position: relative;
+}
+
+#error {
+    font-size: 3em;
+    letter-spacing: -1px;
+    margin-bottom: 30px;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    position: relative;
+}
+
+#player {
+    margin-top: -12%;
+}

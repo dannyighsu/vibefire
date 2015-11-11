@@ -1,0 +1,2 @@
+class FireController < ApplicationController
+end

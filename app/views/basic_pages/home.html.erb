@@ -1,0 +1,48 @@
+<script>
+function setInputType(input) {
+    document.getElementById('input_type').value = input
+}
+</script>
+
+<div id='title-options'>
+  <h5><%= link_to "About Us", about_path, id: "about" %></h5>
+</div>
+
+<div id="hero">
+  <%= link_to image_tag("vibefire.png", alt: "", height: "50", width: '150'), root_path, id: "logoimage" %>
+</div>
+
+
+<div id='title-content'>
+  <div id='title-content-title'>Let's get started</div>
+  <div id='title-content-info'>
+    Choose a song, genre, or artist.
+  </div>
+
+  <div id='title-buttons'>
+    <div id='song-button' class='button'
+    onclick='setInputType("song")'>Song</div>
+    <div id='genre-button' class='button'
+    onclick='setInputType("genre")'>Genre</div>
+    <div id='artist-button' class='button'
+    onclick='setInputType("artist")'>Artist</div>
+  </div>
+
+  <div id='form'>
+    <%= form_tag('/vibe', method: 'get') do %>
+      <%= text_field_tag :input, nil, placeholder: 'Search' %>
+      <%= hidden_field_tag :input_type, "" %>
+      <%= submit_tag('Let\'s go!', :id => 'submit-button') %>
+    <% end %>
+  </div>
+
+  <div id='help'>
+    <h5><a href='/help'>What is this?</a></h5>
+  </div>
+
+  <div id='flash' style="text-align: center;">
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, class: name %>
+    <% end %>
+  </div>
+</div>

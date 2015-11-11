@@ -1,0 +1,88 @@
+
+
+<div class='center jumbotron'>
+    <p><pre>
+        <div id='timer'>
+        </div>
+        <div id='songCounter'>
+        </div>
+        <div id='error'>
+        </div>
+        <% current_track = 0 %>
+        <% liked = [] %>
+        <% logger.info(@tracks) %>
+        <% track_url = "https://youtube.com/embed/" + @tracks[0]["id"]["videoId"] %>
+        <iframe id='player' width="800" height="445" src=<%= track_url + "?autoplay=1" %>> </iframe>
+    </p></pre>
+</div>
+
+<script>
+    var songCount = 0;
+    time = 0;
+    document.getElementById('songCounter').innerHTML = "Songs:" + songCount;
+    document.getElementById('timer').innerHTML = "Time Left: " + (30 - time);
+
+    $(document).ready(function() {
+        var interval = setInterval(timerIncrement, 1000);
+    });
+
+    function timerIncrement() {
+        document.getElementById('timer').innerHTML = "Time Left: " + (30 - time);
+        if (time >= 30) {
+            next();
+        }
+        time = time + 1;
+    }
+
+    var startTime = new Date().getTime();
+
+    function end() {
+        if (songCount < 5) {
+            if (songCount == 4) {
+                document.getElementById('error').innerHTML =
+                'You have 1 song to go.';
+            } else {
+                document.getElementById('error').innerHTML =
+                'You have ' + (10 - songCount) + ' songs to go.';
+            }
+        } else {
+            // Go to result page
+        }
+    }
+
+    function next(liked) {
+        document.getElementById('error').innerHTML = '';
+        time = 0;
+        document.getElementById('timer').innerHTML = 'Next!';
+        songCount += 1;
+        if (liked) {
+            <% liked.push(@tracks[0]) %>;
+        }
+        nextSong();
+    }
+
+    function nextSong() {
+        document.getElementById('songCounter').innerHTML = "Songs: " + songCount;
+
+        <% current_track += 1 %>
+
+        document.getElementById('player').src = "https://youtube.com/embed/" + "<%= @tracks[current_track]["id"]["videoId"] %>" + "?autoplay=1";
+    }
+
+    document.onkeydown = function() {
+        switch (window.event.keyCode) {
+        case 37: // left
+            next(false);
+            break;
+        case 38: // up
+            break;
+        case 39: // right
+            next(true);
+            break;
+        case 40: // down
+            end();
+            break;
+        }
+    }
+
+</script>

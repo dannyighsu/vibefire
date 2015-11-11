@@ -1,0 +1,120 @@
+<div class='center hero-unit'>
+    <img id="img" src=<%= asset_path("kevinxie.jpeg") %>
+    alt="Cover Art Not Found" width="250" height="250" class="img-thumbnail">
+</div>
+
+<style class>
+    #timer {
+        font-size: 3em;
+        letter-spacing: -1px;
+        margin-bottom: 30px;
+        margin-top: 0px;
+        text-align: right;
+        font-weight: bold;
+        color: red;
+        position: relative;
+    }
+
+    #songCounter {
+        font-size: 3em;
+        letter-spacing: -1px;
+        margin-bottom: 30px;
+        text-align: left;
+        font-weight: bold;
+        margin-top: -50px;
+        color: white;
+        position: relative;
+    }
+
+    #error {
+        font-size: 3em;
+        letter-spacing: -1px;
+        margin-bottom: 30px;
+        text-align: center;
+        font-weight: bold;
+        color: white;
+        position: relative;
+    }
+</style>
+
+<div id='timer'>
+</div>
+<div id='songCounter'>
+</div>
+<div id='error'>
+</div>
+
+<script>
+    var seed = sessvars.myObj.split(";");
+    var songCount = 0;
+    time = 0;
+    document.getElementById('songCounter').innerHTML = "Songs:" + songCount;
+    document.getElementById('timer').innerHTML = "Time Left: " + (30 - time);
+
+    $(document).ready(function() {
+        var interval = setInterval(timerIncrement, 1000);
+    });
+
+    function timerIncrement() {
+        document.getElementById('timer').innerHTML = "Time Left: " + (30 - time);
+        if (time >= 30) {
+            next();
+        }
+        time = time + 1;
+    }
+
+    var startTime = new Date().getTime();
+
+    function end() {
+        if (songCount < 10) {
+            if (songCount == 9) {
+                document.getElementById('error').innerHTML =
+                'You have 1 song to go.';
+            } else {
+                document.getElementById('error').innerHTML =
+                'You have ' + (10 - songCount) + ' songs to go.';
+            }
+        } else {
+            // Go to result page
+        }
+    }
+
+    function next() {
+        document.getElementById('error').innerHTML = '';
+        document.getElementById('songCounter').innerHTML = "Songs: " + songCount;
+        time = 0;
+        document.getElementById('timer').innerHTML = 'Next!';
+        $("img").flip({
+            direction:'tb',
+            onAnimation: function() {
+                nextSong();
+            }
+        });
+    }
+
+    function nextSong() {
+        var img = '<%= asset_path('cookies.jpeg') %>';
+        document.getElementById('img').src = img;
+    }
+
+    document.onkeydown = function() {
+        switch (window.event.keyCode) {
+        case 37: // left
+            songCount += 1;
+            next();
+            break;
+        case 38: // up
+            next();
+            break;
+        case 39: // right
+            songCount += 1;
+            next();
+            break;
+        case 40: // down
+            end();
+            break;
+        }
+    }
+
+
+</script>
